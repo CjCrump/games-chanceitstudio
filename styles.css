@@ -1,44 +1,67 @@
 /* ==========================================================
-   Games hub — ChanceITstudio
-   Reuses the "Range Day" tokens from the games so the hub and the
-   games feel like one product. Phase 1 styling is intentionally plain:
-   the directory grid stands in for the wheel (Phase 3).
+   Games hub — Chance IT Studio  ·  C[IT]
+   Brand: matrix green (#00FF9D) + deep emerald (#00995C) on
+   near-black concrete. Art direction: serious graffiti — the
+   signature is the wheatpaste flyer-wall of game cards; everything
+   else stays disciplined. Vanilla CSS, no build step.
    ========================================================== */
 
 :root {
-  --bg:        #0c0e10;
-  --panel:     #14181c;
-  --panel-2:   #1b2127;
-  --well:      #0e1215;
-  --line:      rgba(233, 238, 242, 0.08);
-  --line-2:    rgba(233, 238, 242, 0.16);
-  --ink:       #e9eef2;
-  --ink-dim:   #8a95a0;
-  --ink-faint: #59636d;
-  --signal:      #ff6a2c;
-  --signal-soft: rgba(255, 106, 44, 0.14);
-  --lock:        #36d6c3;
+  /* Surfaces */
+  --bg:        #08080a;          /* brand near-black */
+  --panel:     #101316;          /* raised concrete */
+  --panel-2:   #161b1d;
+  --well:      #0b0e10;
+  --line:      rgba(0, 255, 157, 0.10);
+  --line-2:    rgba(0, 255, 157, 0.22);
+  --line-pale: rgba(230, 236, 233, 0.08);
 
-  --font-display: "Chakra Petch", system-ui, sans-serif;
+  /* Ink */
+  --ink:       #e6ece9;
+  --ink-dim:   #7d8a85;
+  --ink-faint: #4e5a55;
+
+  /* Brand greens */
+  --matrix:      #00ff9d;        /* primary accent */
+  --matrix-soft: rgba(0, 255, 157, 0.14);
+  --matrix-glow: rgba(0, 255, 157, 0.45);
+  --emerald:     #00995c;        /* deep green, secondary / focus */
+
+  /* Type */
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-stencil: "Saira Stencil One", "Archivo", system-ui, sans-serif;
   --font-mono:    "JetBrains Mono", ui-monospace, Menlo, monospace;
   --font-body:    system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
-  --r: 14px;
-  --r-sm: 9px;
+  --r: 12px;
+  --r-sm: 8px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body { height: 100%; }
+
 body {
   margin: 0;
   font-family: var(--font-body);
   color: var(--ink);
   background:
-    radial-gradient(120% 80% at 50% -10%, #161b20 0%, var(--bg) 55%),
+    radial-gradient(60% 42% at 50% -6%, rgba(0, 255, 157, 0.06), transparent 62%),
     var(--bg);
   -webkit-font-smoothing: antialiased;
 }
-#app { min-height: 100vh; min-height: 100dvh; }
+
+/* Concrete grain — fixed, very subtle */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+#app { position: relative; z-index: 1; min-height: 100vh; min-height: 100dvh; }
 
 /* =========================
    Directory
@@ -52,83 +75,115 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 22px 16px 14px;
+  padding: 26px 16px 16px;
 }
-.brand { display: flex; align-items: center; gap: 11px; }
-.brand__mark { display: block; flex: none; }
-.brand__eyebrow {
-  font-family: var(--font-mono);
-  font-size: 9.5px; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--ink-faint);
-}
-.brand__name {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: 22px; letter-spacing: 0.04em; margin-top: 2px;
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand__logo { height: 34px; width: auto; display: block; }
+.brand__tag {
+  font-family: var(--font-stencil);
+  font-size: 22px;
+  letter-spacing: 0.12em;
+  color: var(--matrix);
+  line-height: 1;
+  position: relative;
+  top: 1px;
 }
 .hubhead__hint {
   font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 0.08em; color: var(--ink-dim);
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 14px;
-  padding: 8px 16px 24px;
+  grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
+  gap: 22px 18px;
+  padding: 16px 16px 30px;
+  overflow: visible;   /* let flyer rotation + tape/drip show */
 }
 
+/* --- Wheatpaste flyer card (the signature) --- */
 .card {
   display: flex;
   flex-direction: column;
   text-align: left;
   padding: 0;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: linear-gradient(180deg, var(--panel) 0%, #11161a 100%);
+  border: 1px solid var(--line-pale);
+  border-radius: 2px;                 /* posters aren't rounded */
+  background: linear-gradient(180deg, var(--panel) 0%, #0c0f11 100%);
   color: inherit;
   cursor: pointer;
-  overflow: hidden;
-  transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 14px 28px -18px rgba(0, 0, 0, 0.9);
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.card:nth-child(odd)  { transform: rotate(-1.1deg); }
+.card:nth-child(even) { transform: rotate(1.3deg); }
+
+/* masking tape, top-center */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -9px; left: 50%;
+  width: 62px; height: 19px;
+  transform: translateX(-50%) rotate(-4deg);
+  background: rgba(220, 222, 214, 0.10);
+  border: 1px solid rgba(230, 236, 233, 0.08);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+/* paint drip, grows on hover */
+.card::after {
+  content: "";
+  position: absolute;
+  bottom: -2px; left: 28%;
+  width: 3px; height: 0;
+  background: var(--matrix);
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 0 6px var(--matrix-glow);
+  transition: height 0.22s ease;
+  pointer-events: none;
 }
 .card:hover {
-  transform: translateY(-3px);
-  border-color: var(--signal);
-  box-shadow: 0 20px 40px -24px rgba(255, 106, 44, 0.5);
+  transform: rotate(0deg) translateY(-5px) scale(1.015);
+  border-color: var(--matrix);
+  box-shadow: 0 22px 44px -22px var(--matrix-glow);
+  z-index: 2;
 }
-.card:focus-visible { outline: 2px solid var(--lock); outline-offset: 2px; }
+.card:hover::after { height: 16px; }
+.card:focus-visible { outline: 2px solid var(--matrix); outline-offset: 3px; }
 
 .card__thumb {
   display: block;
   aspect-ratio: 16 / 9;
   background: var(--well);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--line-pale);
+  overflow: hidden;                   /* clip the cover image */
 }
 .card__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.card__body { display: grid; gap: 6px; padding: 14px 15px 15px; }
+.card__body { display: grid; gap: 6px; padding: 14px 15px 16px; }
 .card__title {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: 18px; letter-spacing: 0.02em;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 19px; letter-spacing: 0.005em;
 }
 .card__blurb { font-size: 13px; color: var(--ink-dim); }
-.card__tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 2px 0 4px; }
+.card__tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 3px 0 4px; }
 .tag {
   font-family: var(--font-mono); font-size: 9.5px;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-dim);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--matrix);
   padding: 2px 7px; border: 1px solid var(--line-2); border-radius: 99px;
 }
 .card__best {
   display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
-  margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--line);
+  margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--line-pale);
 }
 .card__best-k {
   font-family: var(--font-mono); font-size: 9.5px;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint);
 }
-.card__best-v {
-  font-family: var(--font-mono); font-size: 12px; color: var(--ink);
-}
+.card__best-v { font-family: var(--font-mono); font-size: 12px; color: var(--ink); }
 .card__plays {
   font-family: var(--font-mono); font-size: 10px;
   color: var(--ink-faint); margin-left: auto;
@@ -136,62 +191,54 @@ body {
 
 .foot {
   display: flex; justify-content: space-between; gap: 12px;
-  padding: 14px 16px 22px;
+  padding: 16px 16px 24px;
   font-family: var(--font-mono); font-size: 11px;
   letter-spacing: 0.06em; color: var(--ink-faint);
 }
+.foot a { color: var(--ink-dim); text-decoration: none; }
+.foot a:hover { color: var(--matrix); }
 
 /* =========================
    Play room (field-first)
    ========================= */
-.playroom {
-  height: 100vh; height: 100dvh;
-  display: grid;
-  grid-template-rows: auto 1fr;
-}
+.playroom { height: 100vh; height: 100dvh; display: grid; grid-template-rows: auto 1fr; }
 .playbar {
   display: flex; align-items: center; gap: 14px;
   padding: 10px 14px;
-  background: linear-gradient(180deg, var(--panel) 0%, #11161a 100%);
+  background: linear-gradient(180deg, var(--panel) 0%, #0c0f11 100%);
   border-bottom: 1px solid var(--line);
 }
 .playbar__title {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: 17px; letter-spacing: 0.03em;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 17px; letter-spacing: 0.02em;
 }
 .playbar__actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 
 .field-wrap {
-  position: relative;
-  background: var(--well);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
+  position: relative; background: var(--well);
+  display: grid; place-items: center; overflow: hidden;
 }
 .field-wrap:fullscreen { background: var(--bg); }
 .field { position: relative; }
 .field--fill { width: 100%; height: 100%; }
 .field--ratio { width: 100%; height: 100%; max-width: 100%; max-height: 100%; margin: auto; }
-.field iframe {
-  width: 100%; height: 100%;
-  border: 0; display: block;
-  background: var(--well);
-}
+.field iframe { width: 100%; height: 100%; border: 0; display: block; background: var(--well); }
 
 /* =========================
    Buttons
    ========================= */
 .btn {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: 13px; letter-spacing: 0.03em;
-  padding: 9px 16px; border: 0; border-radius: var(--r-sm); cursor: pointer;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 13px; letter-spacing: 0.02em;
+  padding: 9px 17px; border: 0; border-radius: var(--r-sm); cursor: pointer;
   transition: transform 0.08s, filter 0.12s, color 0.12s, border-color 0.12s;
 }
 .btn:active { transform: translateY(1px); }
-.btn--primary { background: var(--signal); color: var(--bg); }
-.btn--primary:hover { filter: brightness(1.08); }
+.btn--primary { background: var(--matrix); color: var(--bg); }
+.btn--primary:hover { filter: brightness(1.06); box-shadow: 0 0 18px -4px var(--matrix-glow); }
 .btn--ghost { background: transparent; color: var(--ink-dim); border: 1px solid var(--line-2); }
-.btn--ghost:hover { color: var(--ink); border-color: var(--ink-dim); }
+.btn--ghost:hover { color: var(--ink); border-color: var(--matrix); }
+.btn:focus-visible { outline: 2px solid var(--matrix); outline-offset: 2px; }
 
 .iconbtn {
   width: 34px; height: 34px;
@@ -200,7 +247,7 @@ body {
   background: var(--well); color: var(--ink-dim);
   font-size: 18px; line-height: 1; cursor: pointer;
 }
-.iconbtn:hover { color: var(--ink); }
+.iconbtn:hover { color: var(--matrix); border-color: var(--matrix); }
 
 /* =========================
    Responsive
@@ -209,6 +256,12 @@ body {
   .grid { grid-template-columns: 1fr; }
   .playbar__title { font-size: 15px; }
 }
+
+/* =========================
+   Reduced motion — kill the flyer tilt + drip animation
+   ========================= */
 @media (prefers-reduced-motion: reduce) {
-  .card { transition: none; }
+  .card, .card:nth-child(odd), .card:nth-child(even) { transform: none; transition: none; }
+  .card:hover { transform: translateY(-3px); }
+  .card::after { display: none; }
 }

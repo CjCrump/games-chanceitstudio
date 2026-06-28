@@ -39,11 +39,8 @@ Hub.views.directory = {
     root.innerHTML = `
       <header class="hubhead">
         <div class="brand">
-          <img class="brand__mark" src="assets/favicon.svg" alt="" width="32" height="32" />
-          <div class="brand__text">
-            <div class="brand__eyebrow">ChanceITstudio</div>
-            <div class="brand__name">Games</div>
-          </div>
+          <img class="brand__logo" src="assets/CIT-logo.png" alt="Chance IT Studio" />
+          <span class="brand__tag">GAMES</span>
         </div>
         <div class="hubhead__hint">Pick a game to play</div>
       </header>
