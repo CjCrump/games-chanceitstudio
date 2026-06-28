@@ -1,0 +1,38 @@
+<svg width="640" height="360" viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bullseye">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="46%" r="60%">
+      <stop offset="0%" stop-color="#161b20" />
+      <stop offset="100%" stop-color="#0e1215" />
+    </radialGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" fill="none" stroke="rgba(233,238,242,0.06)" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="640" height="360" fill="url(#glow)" />
+  <rect width="640" height="360" fill="url(#grid)" />
+
+  <!-- corner range brackets -->
+  <g fill="none" stroke="rgba(233,238,242,0.18)" stroke-width="3">
+    <path d="M24 52 V24 H52" />
+    <path d="M588 24 H616 V52" />
+    <path d="M616 308 V336 H588" />
+    <path d="M52 336 H24 V308" />
+  </g>
+
+  <!-- target -->
+  <g transform="translate(320 180)">
+    <circle r="74" fill="#e23b2e" />
+    <circle r="30" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" />
+    <circle r="30" fill="#17100e" />
+    <circle r="5" fill="#ff6a2c" />
+  </g>
+
+  <!-- crosshair cursor near target -->
+  <g stroke="#ff6a2c" stroke-width="2" stroke-linecap="round" transform="translate(404 132)">
+    <line x1="0" y1="-12" x2="0" y2="-4" />
+    <line x1="0" y1="4" x2="0" y2="12" />
+    <line x1="-12" y1="0" x2="-4" y2="0" />
+    <line x1="4" y1="0" x2="12" y2="0" />
+  </g>
+</svg>
