@@ -16,6 +16,15 @@ window.GAMES = [
     tags: ["aim", "fps"],
     fit: "fill",                                          // "fill" | "16:9" | "4:3"
   },
+  {
+    id: "lightsnake",
+    title: "Light Snake",
+    blurb: "Neon dragon · eat the orbs",
+    url: "https://cjcrump.github.io/snake/",
+    thumb: "assets/thumbs/lightsnake.svg",
+    tags: ["arcade", "snake"],
+    fit: "fill",
+  },
 ];
 
 /* Lookup helpers (kept here so views/bridge don't each rebuild them). */

@@ -1,0 +1,56 @@
+<svg width="640" height="360" viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Light Snake">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="46%" r="60%">
+      <stop offset="0%" stop-color="#0d1512"/><stop offset="100%" stop-color="#0b0e10"/>
+    </radialGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" fill="none" stroke="rgba(0,255,157,0.07)" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eafff6"/><stop offset="45%" stop-color="#00ff9d"/><stop offset="100%" stop-color="#00995c"/>
+    </linearGradient>
+    <radialGradient id="orb" cx="40%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#eafff6"/><stop offset="42%" stop-color="#ffcf3a"/><stop offset="100%" stop-color="#ff6a2c"/>
+    </radialGradient>
+    <filter id="gGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="oGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="640" height="360" fill="url(#bgGlow)"/>
+  <rect width="640" height="360" fill="url(#grid)"/>
+
+  <!-- corner range brackets -->
+  <g fill="none" stroke="rgba(0,255,157,0.30)" stroke-width="3">
+    <path d="M24 52 V24 H52"/><path d="M588 24 H616 V52"/>
+    <path d="M616 308 V336 H588"/><path d="M52 336 H24 V308"/>
+  </g>
+
+  <!-- dragon body: a glowing serpentine coil -->
+  <path d="M120 250 C 180 250 200 150 270 150 C 340 150 350 250 420 240 C 470 233 480 170 520 175"
+        fill="none" stroke="url(#body)" stroke-width="20" stroke-linecap="round" filter="url(#gGlow)" opacity="0.95"/>
+  <!-- mane spikes -->
+  <g fill="#ffcf3a" filter="url(#gGlow)" opacity="0.85">
+    <path d="M250 132 l6 14 l-12 0 z"/><path d="M300 138 l6 14 l-12 0 z"/><path d="M205 200 l6 14 l-12 0 z"/>
+  </g>
+  <!-- head -->
+  <g filter="url(#gGlow)">
+    <circle cx="528" cy="176" r="20" fill="url(#body)"/>
+    <circle cx="535" cy="170" r="3.2" fill="#ffcf3a"/>
+    <g stroke="#ffcf3a" stroke-width="3" stroke-linecap="round">
+      <line x1="515" y1="162" x2="505" y2="150"/><line x1="520" y1="160" x2="514" y2="146"/>
+    </g>
+    <g stroke="rgba(234,255,246,0.8)" stroke-width="2" stroke-linecap="round">
+      <line x1="546" y1="180" x2="566" y2="176"/><line x1="546" y1="186" x2="565" y2="190"/>
+    </g>
+  </g>
+
+  <!-- orb (food) -->
+  <g filter="url(#oGlow)">
+    <circle cx="150" cy="250" r="16" fill="url(#orb)"/>
+    <circle cx="144" cy="244" r="4" fill="#eafff6"/>
+  </g>
+</svg>
