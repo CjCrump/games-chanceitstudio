@@ -1,38 +1,43 @@
-<svg width="640" height="360" viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bullseye">
-  <defs>
-    <radialGradient id="glow" cx="50%" cy="46%" r="60%">
-      <stop offset="0%" stop-color="#161b20" />
-      <stop offset="100%" stop-color="#0e1215" />
-    </radialGradient>
-    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
-      <path d="M36 0H0V36" fill="none" stroke="rgba(233,238,242,0.06)" stroke-width="1" />
-    </pattern>
-  </defs>
+<svg width="480" height="270" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialGradient id="be_glow" cx="0.5" cy="0.42" r="0.65">
+<stop offset="0" stop-color="#ff6a2c" stop-opacity="0.10"/>
+<stop offset="1" stop-color="#ff6a2c" stop-opacity="0"/>
+</radialGradient>
+</defs>
 
-  <rect width="640" height="360" fill="url(#glow)" />
-  <rect width="640" height="360" fill="url(#grid)" />
+<rect width="480" height="270" fill="#0c0e10"/>
+<rect width="480" height="270" fill="url(#be_glow)"/>
 
-  <!-- corner range brackets -->
-  <g fill="none" stroke="rgba(233,238,242,0.18)" stroke-width="3">
-    <path d="M24 52 V24 H52" />
-    <path d="M588 24 H616 V52" />
-    <path d="M616 308 V336 H588" />
-    <path d="M52 336 H24 V308" />
-  </g>
+<g stroke="rgba(233,238,242,0.06)" stroke-width="1">
+<line x1="0" y1="90" x2="480" y2="90"/>
+<line x1="0" y1="180" x2="480" y2="180"/>
+<line x1="160" y1="0" x2="160" y2="270"/>
+<line x1="320" y1="0" x2="320" y2="270"/>
+</g>
 
-  <!-- target -->
-  <g transform="translate(320 180)">
-    <circle r="74" fill="#e23b2e" />
-    <circle r="30" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" />
-    <circle r="30" fill="#17100e" />
-    <circle r="5" fill="#ff6a2c" />
-  </g>
+<g transform="translate(240,128)">
+<circle r="76" fill="none" stroke="#ff6a2c" stroke-width="2" opacity="0.25"/>
+<circle r="56" fill="none" stroke="#ff6a2c" stroke-width="2.5" opacity="0.45"/>
+<circle r="36" fill="none" stroke="#ff6a2c" stroke-width="3" opacity="0.7"/>
+<circle r="16" fill="#ff6a2c" opacity="0.18"/>
+<circle r="6" fill="#ff6a2c"/>
+<g stroke="#ff6a2c" stroke-width="2" stroke-linecap="round">
+<line x1="0" y1="-86" x2="0" y2="-64"/>
+<line x1="0" y1="64" x2="0" y2="86"/>
+<line x1="-86" y1="0" x2="-64" y2="0"/>
+<line x1="64" y1="0" x2="86" y2="0"/>
+</g>
+<circle cx="34" cy="-30" r="4" fill="#36d6c3"/>
+</g>
 
-  <!-- crosshair cursor near target -->
-  <g stroke="#ff6a2c" stroke-width="2" stroke-linecap="round" transform="translate(404 132)">
-    <line x1="0" y1="-12" x2="0" y2="-4" />
-    <line x1="0" y1="4" x2="0" y2="12" />
-    <line x1="-12" y1="0" x2="-4" y2="0" />
-    <line x1="4" y1="0" x2="12" y2="0" />
-  </g>
+<g stroke="#ff6a2c" stroke-width="2" fill="none" opacity="0.55">
+<path d="M16 36 L16 16 L36 16"/>
+<path d="M464 36 L464 16 L444 16"/>
+<path d="M16 234 L16 254 L36 254"/>
+<path d="M464 234 L464 254 L444 254"/>
+</g>
+
+<text x="22" y="34" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="12" letter-spacing="2" fill="#59636d">C[IT]</text>
+<text x="22" y="250" font-family="'Chakra Petch', 'Archivo', system-ui, sans-serif" font-size="26" font-weight="700" letter-spacing="1" fill="#e9eef2">BULL<tspan fill="#ff6a2c">SEYE</tspan></text>
 </svg>

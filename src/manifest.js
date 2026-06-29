@@ -25,6 +25,15 @@ window.GAMES = [
     tags: ["arcade", "snake"],
     fit: "fill",
   },
+  {
+    id: "turtlesurf",
+    title: "Turtle Surf",
+    blurb: "Ocean flapper · glide the reef",
+    url: "https://cjcrump.github.io/turtle-surf/",
+    thumb: "assets/thumbs/turtlesurf.svg",
+    tags: ["arcade", "flappy"],
+    fit: "fill",
+  },
 ];
 
 /* Lookup helpers (kept here so views/bridge don't each rebuild them). */

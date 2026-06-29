@@ -1,56 +1,55 @@
-<svg width="640" height="360" viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Light Snake">
-  <defs>
-    <radialGradient id="bgGlow" cx="50%" cy="46%" r="60%">
-      <stop offset="0%" stop-color="#0d1512"/><stop offset="100%" stop-color="#0b0e10"/>
-    </radialGradient>
-    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
-      <path d="M36 0H0V36" fill="none" stroke="rgba(0,255,157,0.07)" stroke-width="1"/>
-    </pattern>
-    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#eafff6"/><stop offset="45%" stop-color="#00ff9d"/><stop offset="100%" stop-color="#00995c"/>
-    </linearGradient>
-    <radialGradient id="orb" cx="40%" cy="38%" r="65%">
-      <stop offset="0%" stop-color="#eafff6"/><stop offset="42%" stop-color="#ffcf3a"/><stop offset="100%" stop-color="#ff6a2c"/>
-    </radialGradient>
-    <filter id="gGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="oGlow" x="-80%" y="-80%" width="260%" height="260%">
-      <feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
+<svg width="480" height="270" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialGradient id="ls_glow" cx="0.5" cy="0.4" r="0.7">
+<stop offset="0" stop-color="#00ff9d" stop-opacity="0.10"/>
+<stop offset="1" stop-color="#00ff9d" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="ls_body" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#00995c"/>
+<stop offset="1" stop-color="#00ff9d"/>
+</linearGradient>
+</defs>
 
-  <rect width="640" height="360" fill="url(#bgGlow)"/>
-  <rect width="640" height="360" fill="url(#grid)"/>
+<rect width="480" height="270" fill="#08080a"/>
+<rect width="480" height="270" fill="url(#ls_glow)"/>
 
-  <!-- corner range brackets -->
-  <g fill="none" stroke="rgba(0,255,157,0.30)" stroke-width="3">
-    <path d="M24 52 V24 H52"/><path d="M588 24 H616 V52"/>
-    <path d="M616 308 V336 H588"/><path d="M52 336 H24 V308"/>
-  </g>
+<g stroke="rgba(0,255,157,0.06)" stroke-width="1">
+<line x1="120" y1="0" x2="120" y2="270"/>
+<line x1="240" y1="0" x2="240" y2="270"/>
+<line x1="360" y1="0" x2="360" y2="270"/>
+<line x1="0" y1="90" x2="480" y2="90"/>
+<line x1="0" y1="180" x2="480" y2="180"/>
+</g>
 
-  <!-- dragon body: a glowing serpentine coil -->
-  <path d="M120 250 C 180 250 200 150 270 150 C 340 150 350 250 420 240 C 470 233 480 170 520 175"
-        fill="none" stroke="url(#body)" stroke-width="20" stroke-linecap="round" filter="url(#gGlow)" opacity="0.95"/>
-  <!-- mane spikes -->
-  <g fill="#ffcf3a" filter="url(#gGlow)" opacity="0.85">
-    <path d="M250 132 l6 14 l-12 0 z"/><path d="M300 138 l6 14 l-12 0 z"/><path d="M205 200 l6 14 l-12 0 z"/>
-  </g>
-  <!-- head -->
-  <g filter="url(#gGlow)">
-    <circle cx="528" cy="176" r="20" fill="url(#body)"/>
-    <circle cx="535" cy="170" r="3.2" fill="#ffcf3a"/>
-    <g stroke="#ffcf3a" stroke-width="3" stroke-linecap="round">
-      <line x1="515" y1="162" x2="505" y2="150"/><line x1="520" y1="160" x2="514" y2="146"/>
-    </g>
-    <g stroke="rgba(234,255,246,0.8)" stroke-width="2" stroke-linecap="round">
-      <line x1="546" y1="180" x2="566" y2="176"/><line x1="546" y1="186" x2="565" y2="190"/>
-    </g>
-  </g>
+<g fill="none" stroke-linecap="round">
+<path d="M70 200 C140 150 120 90 200 95 C280 100 250 175 330 155 C370 146 380 120 384 104"
+      stroke="#00ff9d" stroke-width="34" opacity="0.16"/>
+<path d="M70 200 C140 150 120 90 200 95 C280 100 250 175 330 155 C370 146 380 120 384 104"
+      stroke="url(#ls_body)" stroke-width="22"/>
+<path d="M70 200 C140 150 120 90 200 95 C280 100 250 175 330 155 C370 146 380 120 384 104"
+      stroke="rgba(234,255,246,0.45)" stroke-width="6"/>
+</g>
 
-  <!-- orb (food) -->
-  <g filter="url(#oGlow)">
-    <circle cx="150" cy="250" r="16" fill="url(#orb)"/>
-    <circle cx="144" cy="244" r="4" fill="#eafff6"/>
-  </g>
+<g transform="translate(388,102)">
+<circle r="16" fill="#00ff9d"/>
+<circle r="16" fill="none" stroke="rgba(234,255,246,0.5)" stroke-width="2"/>
+<circle cx="6" cy="-5" r="3" fill="#ffcf3a"/>
+<circle cx="6" cy="6" r="3" fill="#ffcf3a"/>
+</g>
+
+<g transform="translate(432,86)">
+<circle r="20" fill="#ff6a2c" opacity="0.25"/>
+<circle r="11" fill="#ffcf3a"/>
+<circle cx="-3" cy="-3" r="3.5" fill="#eafff6"/>
+</g>
+
+<g stroke="#00ff9d" stroke-width="2" fill="none" opacity="0.55">
+<path d="M16 36 L16 16 L36 16"/>
+<path d="M464 36 L464 16 L444 16"/>
+<path d="M16 234 L16 254 L36 254"/>
+<path d="M464 234 L464 254 L444 254"/>
+</g>
+
+<text x="22" y="34" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="12" letter-spacing="2" fill="#4e5a55">C[IT]</text>
+<text x="22" y="250" font-family="'Saira Stencil One', 'Archivo', system-ui, sans-serif" font-size="26" letter-spacing="1" fill="#e6ece9">LIGHT<tspan fill="#00ff9d"> SNAKE</tspan></text>
 </svg>
