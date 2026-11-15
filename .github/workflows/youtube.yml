@@ -1,0 +1,41 @@
+# Once a day: pull new uploads from both YouTube channels and commit any changes.
+# The push to main makes Cloudflare Pages redeploy the site.
+name: Update YouTube clips
+
+on:
+  schedule:
+    - cron: '17 11 * * *' # 11:17 UTC daily (5:17 AM Central)
+  workflow_dispatch: # adds a "Run workflow" button in the Actions tab
+
+permissions:
+  contents: write # needed to commit the new thumbnails and data/youtube.js
+
+concurrency:
+  group: youtube-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Pull latest uploads
+        run: node scripts/update-youtube.mjs
+
+      - name: Commit if anything changed
+        run: |
+          git add data/youtube.js assets/yt
+          if git diff --cached --quiet; then
+            echo "No new uploads."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: update YouTube clips"
+          git push

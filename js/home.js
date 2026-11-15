@@ -18,41 +18,69 @@
     return a;
   };
 
+  // Only links to the platforms we expect, and only https, so a typo in a data
+  // file can't turn into a javascript: link.
+  const safeUrl = (u) => (typeof u === 'string' && /^https:\/\//.test(u) ? u : '');
+
+  const formatDate = (iso) => new Date(`${iso}T12:00:00`)
+    .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  function thumbImg(video) {
+    const img = el('img');
+    img.src = video.thumb;
+    img.alt = '';
+    img.loading = 'lazy';
+    img.width = video.vertical ? 540 : 480;
+    img.height = video.vertical ? 960 : 270;
+    if (!video.vertical) img.className = 'wide';
+    return img;
+  }
+
+  // One card per YouTube upload; extra platform links come from data/clips.js.
   function renderClips() {
     const grid = document.getElementById('clipGrid');
-    for (const clip of window.CLIPS || []) {
+    const extra = window.CLIP_LINKS || {};
+    for (const v of window.YOUTUBE?.gamer || []) {
       const li = el('li', 'clip-card static-hover');
-      const img = el('img');
-      img.src = clip.thumb;
-      img.alt = '';
-      img.loading = 'lazy';
-      img.width = 540;
-      img.height = 960;
       const body = el('div', 'clip-body');
-      body.append(el('h3', '', clip.title));
-      const date = el('time', 'dim', new Date(`${clip.date}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }));
-      date.dateTime = clip.date;
+      body.append(el('h3', '', v.title));
+      const date = el('time', 'dim', formatDate(v.date));
+      date.dateTime = v.date;
       body.append(date);
       const buttons = el('div', 'platforms');
-      for (const [p, url] of Object.entries(clip.links || {})) {
-        if (url) buttons.append(link(url, `chip ${p}`, PLATFORM_LABEL[p] || p, `Watch ${clip.title} on ${PLATFORM_LABEL[p] || p}`));
+      const links = { youtube: v.url, ...(extra[v.id] || {}) };
+      for (const p of ['youtube', 'instagram', 'facebook', 'tiktok']) {
+        const url = safeUrl(links[p]);
+        if (url) buttons.append(link(url, `chip ${p}`, PLATFORM_LABEL[p], `Watch ${v.title} on ${PLATFORM_LABEL[p]}`));
       }
       body.append(buttons);
-      li.append(img, body);
+      li.append(thumbImg(v), body);
       grid.append(li);
     }
   }
 
+  // Each follow card previews that channel's newest YouTube upload.
   function renderFollow() {
     const grid = document.getElementById('followGrid');
     for (const key of ['gamer', 'dev']) {
       const s = window.SOCIALS?.[key];
       if (!s) continue;
       const card = el('div', `follow-card ${key}`);
-      card.append(el('p', 'follow-role', s.role), el('h3', '', s.name));
+      const text = el('div', 'follow-text');
+      text.append(el('p', 'follow-role', s.role), el('h3', '', s.name));
       const list = el('div', 'platforms');
-      for (const l of s.links) list.append(link(l.url, `chip ${l.platform}`, l.label, `${s.name} on ${l.label}`));
-      card.append(list);
+      for (const l of s.links) {
+        const url = safeUrl(l.url);
+        if (url) list.append(link(url, `chip ${l.platform}`, l.label, `${s.name} on ${l.label}`));
+      }
+      text.append(list);
+      card.append(text);
+      const latest = window.YOUTUBE?.[key]?.[0];
+      if (latest) {
+        const a = link(latest.url, 'follow-latest static-hover', '', `Latest from ${s.name}: ${latest.title}`);
+        a.append(thumbImg(latest), el('span', '', 'Latest'));
+        card.append(a);
+      }
       grid.append(card);
     }
   }

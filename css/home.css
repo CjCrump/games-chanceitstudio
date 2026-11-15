@@ -190,7 +190,12 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--yellow); outlin
 .chip:hover { box-shadow: 3px 3px 0 var(--ink); transform: translate(-1px, -1px); }
 
 .follow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 26px; }
-.follow-card { border: var(--outline); border-radius: var(--radius); padding: 18px 20px; color: var(--ink); }
+.follow-card { border: var(--outline); border-radius: var(--radius); padding: 18px 20px; color: var(--ink); display: flex; gap: 16px; align-items: center; justify-content: space-between; }
+.follow-latest { position: relative; flex: none; width: 92px; border: var(--outline); border-radius: 8px; overflow: hidden; background: var(--ink); color: var(--cream); text-decoration: none; }
+.follow-latest img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; }
+.follow-latest img.wide { aspect-ratio: 16 / 9; }
+.follow-latest span { position: absolute; left: 0; right: 0; bottom: 0; padding: 2px 0; text-align: center; font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: 0.1em; background: rgba(20, 20, 20, 0.8); }
+.clip-card img.wide { aspect-ratio: 16 / 9; }
 .follow-card.gamer { background: radial-gradient(circle, rgba(0, 0, 0, 0.14) 1.5px, transparent 1.6px) 0 0 / 12px 12px, var(--slim); box-shadow: 7px 7px 0 var(--purple); }
 .follow-card.dev { background: radial-gradient(circle, rgba(0, 0, 0, 0.12) 1.5px, transparent 1.6px) 0 0 / 12px 12px, var(--teal); box-shadow: 7px 7px 0 var(--pink); }
 .follow-card h3 { font: 36px/1 var(--pop); letter-spacing: 0.03em; margin: 2px 0 6px; }
