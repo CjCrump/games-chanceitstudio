@@ -27,6 +27,8 @@ jobs:
 
       - name: Pull latest uploads
         run: node scripts/update-youtube.mjs
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 
       - name: Commit if anything changed
         run: |

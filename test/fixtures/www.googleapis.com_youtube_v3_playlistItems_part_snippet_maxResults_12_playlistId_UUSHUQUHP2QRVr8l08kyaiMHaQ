@@ -1,0 +1,6 @@
+{"items":[
+ {"snippet":{"title":"Spanky x2 &amp; friends <b>","publishedAt":"2026-11-14T22:01:00Z","resourceId":{"videoId":"E2Diwmgt7aU"},"thumbnails":{"high":{"url":"https://i.ytimg.com/vi/E2Diwmgt7aU/hqdefault.jpg"}}}},
+ {"snippet":{"title":"No vertical thumb","publishedAt":"2026-11-12T00:00:00Z","resourceId":{"videoId":"NoVert00001"},"thumbnails":{"high":{"url":"https://i.ytimg.com/vi/NoVert00001/hqdefault.jpg"}}}},
+ {"snippet":{"title":"Private video","publishedAt":"2026-11-11T00:00:00Z","resourceId":{"videoId":"Private0001"}}},
+ {"snippet":{"title":"bad id","resourceId":{"videoId":"x"}}}
+]}

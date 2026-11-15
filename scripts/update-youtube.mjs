@@ -1,5 +1,8 @@
-// Pulls the newest uploads from each YouTube channel's public RSS feed (no API key),
+// Pulls the newest Shorts from each YouTube channel with the YouTube Data API,
 // saves their thumbnails into assets/yt/, and writes data/youtube.js for the home page.
+// Every channel has a hidden Shorts-only playlist: "UUSH" + the channel ID minus "UC".
+// (YouTube's public RSS feeds return 404 to GitHub's servers, so they can't be used.)
+// Needs the YOUTUBE_API_KEY secret. Each run costs 2 of the free 10,000 daily units.
 // Run by .github/workflows/youtube.yml once a day. Visitors never contact YouTube:
 // the site only serves the files this script saved.
 //
@@ -12,20 +15,21 @@ import { join } from 'node:path';
 // With the ID set, the script never has to load the channel page, which YouTube
 // sometimes blocks from GitHub's servers. Leave id empty and it tries the page.
 const CHANNELS = [
-  { key: 'gamer', handle: 'SlimchanceGG', id: '' },
-  { key: 'dev', handle: 'chanceitstudio', id: '' },
+  { key: 'gamer', handle: 'SlimchanceGG', id: 'UCUQUHP2QRVr8l08kyaiMHaQ' },
+  { key: 'dev', handle: 'chanceitstudio', id: 'UCoutoHiFvQNi0ZMEBHokZAA' },
 ];
 const KEEP = 12; // newest Shorts kept per channel
 const THUMB_DIR = 'assets/yt';
 const OUT_FILE = 'data/youtube.js';
 const FIXTURES = process.env.FIXTURES; // folder of saved responses for offline tests
+const API_KEY = process.env.YOUTUBE_API_KEY || '';
 
 const ID_RE = /^[A-Za-z0-9_-]{11}$/; // every YouTube video ID has this shape
 const CHANNEL_RE = /^UC[A-Za-z0-9_-]{22}$/;
 
 async function get(url, as = 'text') {
   if (FIXTURES) {
-    const name = url.replace(/^https?:\/\//, '').replace(/[^A-Za-z0-9.]+/g, '_');
+    const name = url.replace(/[?&]key=[^&]*/, '').replace(/^https?:\/\//, '').replace(/[^A-Za-z0-9.]+/g, '_');
     const data = await readFile(join(FIXTURES, name)).catch(() => null);
     if (!data) return null;
     return as === 'text' ? data.toString('utf8') : data;
@@ -38,7 +42,7 @@ async function get(url, as = 'text') {
     },
   });
   if (!res.ok) {
-    console.log(`  ${res.status} from ${url}`);
+    console.log(`  ${res.status} from ${url.replace(API_KEY || '\u0000', '***')}`);
     return null;
   }
   return as === 'text' ? res.text() : Buffer.from(await res.arrayBuffer());
@@ -61,22 +65,23 @@ async function channelId({ handle, id: fixed }) {
   return id;
 }
 
-const decode = (s) => s
-  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
-  .replace(/&#39;/g, "'").replace(/&amp;/g, '&');
-
-// Tiny RSS reader: only the fields we use, so no XML library is needed.
-function parseFeed(xml) {
-  return [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map(([, e]) => ({
-    id: e.match(/<yt:videoId>([^<]+)<\/yt:videoId>/)?.[1],
-    title: decode(e.match(/<title>([^<]*)<\/title>/)?.[1] ?? ''),
-    published: e.match(/<published>([^<]+)<\/published>/)?.[1] ?? '',
-    url: e.match(/<link rel="alternate" href="([^"]+)"/)?.[1] ?? '',
-  })).filter((v) => ID_RE.test(v.id ?? ''));
+// The channel's Shorts playlist, newest first. Returns [{ id, title, published }].
+async function listShorts(channelId) {
+  const playlist = `UUSH${channelId.slice(2)}`;
+  const url = 'https://www.googleapis.com/youtube/v3/playlistItems' +
+    `?part=snippet&maxResults=${KEEP}&playlistId=${playlist}&key=${encodeURIComponent(API_KEY)}`;
+  const json = await get(url);
+  if (!json) throw new Error(`YouTube API refused the Shorts list (playlist ${playlist})`);
+  const data = JSON.parse(json);
+  return (data.items || []).map((it) => ({
+    id: it.snippet?.resourceId?.videoId,
+    title: it.snippet?.title ?? '',
+    published: it.snippet?.publishedAt ?? '',
+    fallbackThumb: it.snippet?.thumbnails?.high?.url ?? '',
+  })).filter((v) => ID_RE.test(v.id ?? '') && v.title !== 'Private video' && v.title !== 'Deleted video');
 }
 
-// Shorts only (for now). Only Shorts have a vertical "oar2" thumbnail, so that
-// doubles as the test: no vertical thumbnail means it's a regular video, skip it.
+// Shorts usually have a vertical "oar2" thumbnail; use it when it exists.
 async function saveShortThumb(id) {
   const img = await get(`https://i.ytimg.com/vi/${id}/oar2.jpg`, 'buffer');
   if (!img || img.length < 2000) return false;
@@ -85,6 +90,7 @@ async function saveShortThumb(id) {
 }
 
 async function main() {
+  if (!API_KEY && !FIXTURES) throw new Error('YOUTUBE_API_KEY is not set (add it under repo Settings > Secrets > Actions)');
   await mkdir(THUMB_DIR, { recursive: true });
   const previous = await loadPrevious();
   const out = {};
@@ -92,11 +98,9 @@ async function main() {
   let failures = 0;
 
   for (const ch of CHANNELS) {
-    let xml = null;
+    let shorts = [];
     try {
-      const id = await channelId(ch);
-      xml = await get(`https://www.youtube.com/feeds/videos.xml?channel_id=${id}`);
-      if (!xml) throw new Error(`no RSS feed for @${ch.handle} (channel ${id})`);
+      shorts = await listShorts(await channelId(ch));
     } catch (err) {
       // one channel failing keeps its last good list instead of wiping it
       // ::warning:: makes GitHub show a yellow warning on the run instead of hiding it
@@ -107,11 +111,17 @@ async function main() {
       continue;
     }
     out[ch.key] = [];
-    for (const v of parseFeed(xml)) {
+    for (const v of shorts) {
       if (out[ch.key].length >= KEEP) break;
-      if (!(await saveShortThumb(v.id))) {
-        console.log(`  skipped (not a Short): ${v.title}`);
-        continue;
+      // vertical thumbnail if YouTube has one, otherwise the playlist's 16:9 one
+      let vertical = await saveShortThumb(v.id);
+      if (!vertical) {
+        const img = /^https:\/\/i\.ytimg\.com\//.test(v.fallbackThumb) ? await get(v.fallbackThumb, 'buffer') : null;
+        if (!img) {
+          console.log(`  skipped (no thumbnail): ${v.title}`);
+          continue;
+        }
+        await writeFile(join(THUMB_DIR, `${v.id}.jpg`), img);
       }
       keep.add(`${v.id}.jpg`);
       out[ch.key].push({
@@ -120,7 +130,7 @@ async function main() {
         date: v.published.slice(0, 10),
         url: `https://youtube.com/shorts/${v.id}`,
         thumb: `${THUMB_DIR}/${v.id}.jpg`,
-        vertical: true,
+        vertical,
       });
     }
     console.log(`@${ch.handle}: ${out[ch.key].length} Shorts`);
