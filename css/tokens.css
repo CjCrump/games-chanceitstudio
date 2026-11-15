@@ -1,0 +1,41 @@
+/* Shared tokens: SlimchanceGG green leads, with a 90s jazz / Memphis palette around it.
+   Fonts are self-hosted (fonts/, OFL licenses there). No Google requests. */
+
+@font-face { font-family: 'Bangers'; src: url('../fonts/Bangers-Regular.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'DM Mono'; src: url('../fonts/dm-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'DM Mono'; src: url('../fonts/dm-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'DM Sans'; src: url('../fonts/dm-sans-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'DM Sans'; src: url('../fonts/dm-sans-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+
+:root {
+  /* surfaces: deep jazz purple, not black */
+  --bg: #2a1d47;
+  --bg-2: #352659;
+  --screen: #140c26;
+  --line: #4b3a73;
+
+  /* text */
+  --text: #fff3d6;   /* warm cream */
+  --dim: #c3b4e3;
+
+  /* SlimchanceGG green leads */
+  --slim: #12b800;
+  --phosphor: #5dff6e;
+
+  /* jazz / Memphis accents */
+  --purple: #8a4dff;
+  --teal: #00c4b4;
+  --pink: #ff3fa4;
+  --yellow: #ffe14d;
+  --cream: #fff3d6;
+  --ink: #141414;
+  --wood: #b0743f;
+
+  --mono: 'DM Mono', ui-monospace, monospace;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --pop: 'Bangers', Impact, sans-serif;
+
+  --outline: 3px solid var(--ink);
+  --shadow: 6px 6px 0 var(--ink);
+  --radius: 12px;
+}

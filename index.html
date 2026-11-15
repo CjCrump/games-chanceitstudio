@@ -1,36 +1,123 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Games · ChanceITstudio</title>
-    <meta name="description" content="A directory of browser games by ChanceITstudio. Pick a game and play it in the field, fullscreen optional." />
-    <link rel="icon" href="assets/favicon-32.png" sizes="32x32" />
-    <link rel="icon" href="assets/favicon.png" />
-    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-    <meta property="og:image" content="assets/og-banner.png" />
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SlimChance | gaming clips, Clipstack and the arcade</title>
+  <meta name="description" content="SlimChance gaming clips from YouTube, Instagram and Facebook, Clipstack the free vertical clip editor, and a browser arcade. Built by Chance IT Studio.">
+  <link rel="icon" href="assets/brand/avatar.png">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+  <div class="bg-space" aria-hidden="true"></div>
+  <div class="bg-tint" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Saira+Stencil+One&family=JetBrains+Mono:wght@500;700&display=swap"
-      rel="stylesheet"
-    />
+  <header class="site-header">
+    <a class="lockup" href="./"><img src="assets/brand/lockup.png" alt="Slim Chance" width="1280" height="720"></a>
+    <nav aria-label="Main">
+      <a href="#clips">Clips</a>
+      <a href="#follow">Follow</a>
+      <a href="#clipstack">Clipstack</a>
+      <a href="#arcade">Arcade</a>
+      <a href="#everyone">For everyone</a>
+    </nav>
+  </header>
 
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+  <main id="main">
+    <!-- hero: a retro box TV; everything sits on the screen -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="tv">
+        <div class="tv-ears" aria-hidden="true"><span></span><span></span></div>
+        <div class="tv-body">
+          <div class="tv-screen">
+            <div class="tunnel" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="screen-static" aria-hidden="true"></div>
+            <div class="osd" aria-hidden="true"><span>CH 03</span><span class="rec">&#9679; REC</span></div>
+            <div class="screen-content">
+              <img class="screen-logo" src="assets/brand/lockup.png" alt="Slim Chance" width="1858" height="608">
+              <h1 id="hero-title" class="pop-title">Lock in.<br>Game out.<br><span class="alt">Then stack for socials.</span></h1>
+              <p class="lede">Gaming clips with the downtime sped up and the ragdolls left in.</p>
+              <div class="actions">
+                <a class="btn pop" href="https://www.youtube.com/@SlimchanceGG?sub_confirmation=1">Subscribe on YouTube</a>
+                <a class="btn ghost" href="#clips">Watch clips</a>
+              </div>
+            </div>
+          </div>
+          <div class="tv-panel" aria-hidden="true">
+            <span class="knob"></span><span class="knob small"></span>
+            <span class="grille"></span>
+            <span class="jacks"><i class="y"></i><i class="w"></i><i class="r"></i></span>
+          </div>
+        </div>
+        <div class="tv-feet" aria-hidden="true"><span></span><span></span></div>
+      </div>
+    </section>
 
-  <body data-view="directory">
-    <div id="app"></div>
+    <section id="clips" class="section" aria-labelledby="clips-title">
+      <h2 id="clips-title" class="section-title"><span class="rca" aria-hidden="true"><i></i><i></i><i></i></span> Latest clips</h2>
+      <ul class="clip-grid" id="clipGrid"></ul>
+    </section>
 
-    <!-- Plain scripts (no ES modules) so the hub runs on file:// too.
-         Order matters: data + libs first, app.js last. -->
-    <script src="src/manifest.js" defer></script>
-    <script src="src/achievements.js" defer></script>
-    <script src="src/store.js" defer></script>
-    <script src="src/bridge.js" defer></script>
-    <script src="src/views/directory.js" defer></script>
-    <script src="src/views/play.js" defer></script>
-    <script src="app.js" defer></script>
-  </body>
+    <section id="follow" class="section" aria-labelledby="follow-title">
+      <h2 id="follow-title" class="section-title"><span class="rca" aria-hidden="true"><i></i><i></i><i></i></span> Follow along</h2>
+      <div class="follow-grid" id="followGrid"></div>
+    </section>
+
+    <section id="clipstack" class="section" aria-labelledby="clipstack-title">
+      <h2 id="clipstack-title" class="section-title"><span class="rca" aria-hidden="true"><i></i><i></i><i></i></span> Clipstack</h2>
+      <div class="terminal wide">
+        <div class="terminal-bar"><span>clipstack</span><span>free · open source</span></div>
+        <div class="terminal-body two-col">
+          <div>
+            <p class="prompt">$ clipstack --watermark none</p>
+            <p>I built my own split-screen editor because the free ones stamp a watermark on your clip. Two crop boxes become one vertical video, with text pops and sped-up sections. Your clip never leaves your browser.</p>
+            <div class="actions">
+              <a class="btn pop" href="clipstack/">Open Clipstack</a>
+              <a class="btn ghost" href="https://github.com/CjCrump/clipstack">See the code</a>
+            </div>
+          </div>
+          <ul class="feature-list">
+            <li>Linked crop boxes for gameplay and cam</li>
+            <li>Text pops in Bangers</li>
+            <li>Speed up the boring parts</li>
+            <li>MP4 export in Firefox, Chrome, Edge and Safari</li>
+            <li>Works with a keyboard alone</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="arcade" class="section" aria-labelledby="arcade-title">
+      <h2 id="arcade-title" class="section-title"><span class="rca" aria-hidden="true"><i></i><i></i><i></i></span> Arcade <span class="sub">beat my high score</span></h2>
+      <ul class="game-grid" id="gameGrid"></ul>
+    </section>
+
+    <section id="everyone" class="section everyone" aria-labelledby="everyone-title">
+      <div class="burst" aria-hidden="true">FOR<br>EVERYONE</div>
+      <div>
+        <h2 id="everyone-title" class="pop-title small">Gaming and content are for everyone.</h2>
+        <p>Every page here works with a keyboard alone, follows your device when it asks for less motion, and doesn't track you. Clipstack has a hint on every button so you can figure it out without a tutorial. If something here gets in your way, tell me and I'll fix it.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="half gamer">
+      <img src="assets/brand/avatar.png" alt="" width="800" height="800">
+      <p><b>SlimchanceGG</b> is the gamer.</p>
+    </div>
+    <div class="half dev">
+      <img src="assets/CIT-logo.png" alt="C[IT]">
+      <p><b>Chance IT Studio</b> is the dev. Websites and custom software. <a href="https://chanceitstudio.com">chanceitstudio.com</a></p>
+    </div>
+    <p class="legal">© 2026 Chance IT Studio LLC · <a href="security.html">Security</a></p>
+  </footer>
+
+  <script src="data/socials.js" defer></script>
+  <script src="data/clips.js" defer></script>
+  <script src="src/manifest.js" defer></script>
+  <script src="js/home.js" defer></script>
+</body>
 </html>

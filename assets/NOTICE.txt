@@ -1,0 +1,9 @@
+assets/wormhole.jpg
+  Based on "Wormhole" by genty (Pixabay image 2514312), used under the Pixabay
+  Content License (free to use, no attribution required).
+  https://pixabay.com/service/license-summary/
+  Modified: re-centred on the tunnel's centre and extended into a square by
+  mirroring the existing nebula around the hole, then edge-faded and resized.
+
+assets/brand/*: SlimchanceGG artwork, (c) Chance IT Studio LLC. Not covered by
+  any open source license in this repository.
