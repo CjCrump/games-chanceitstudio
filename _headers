@@ -1,0 +1,24 @@
+# Cloudflare Pages response headers. What each one does: /security.html
+# Rules stack. "! Name" removes a header set by an earlier, wider rule.
+
+# Hub pages: home, arcade, security page
+/*
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; frame-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), usb=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin
+  X-Frame-Options: SAMEORIGIN
+  Strict-Transport-Security: max-age=31536000
+
+# Games run inside the arcade frame. Bullseye's crosshair cursor is a data: SVG.
+/arcade/games/*
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'; upgrade-insecure-requests
+
+# Clipstack (same policy as its own repo). The AAC encoder needs wasm and blob workers.
+/clipstack/*
+  ! Content-Security-Policy
+  ! X-Frame-Options
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self' blob:; img-src 'self'; media-src 'self' blob:; style-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Frame-Options: DENY

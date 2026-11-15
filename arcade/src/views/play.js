@@ -24,9 +24,6 @@ Hub.views.play = {
     const multi = games.length > 1;
 
     const fitClass = game.fit && game.fit !== "fill" ? "field--ratio" : "field--fill";
-    const ratioStyle = game.fit && game.fit !== "fill"
-      ? `style="aspect-ratio:${game.fit.replace(":", "/")}"`
-      : "";
 
     root.innerHTML = `
       <div class="playroom">
@@ -46,7 +43,7 @@ Hub.views.play = {
         </header>
 
         <div class="field-wrap" id="fieldWrap">
-          <div class="field ${fitClass}" ${ratioStyle}>
+          <div class="field ${fitClass}">
             <iframe
               id="gameFrame"
               src="${Hub.games.urlOf(gameId)}"
@@ -60,6 +57,8 @@ Hub.views.play = {
       </div>`;
 
     // live "Your best" line; the store notifies us when the game reports a score
+    // set via CSSOM, not a style="" attribute, so the CSP can block inline styles
+    if (game.fit && game.fit !== "fill") root.querySelector(".field").style.aspectRatio = game.fit.replace(":", "/");
     const bestLine = root.querySelector("#bestLine");
     const showBest = () => {
       bestLine.textContent = `Your best: ${Hub.formatBest(Hub.store.bestFor(gameId)) || "none yet"}`;

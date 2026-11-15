@@ -61,9 +61,20 @@ bridge, so `file://` is not enough for the arcade.
 
 ## Deploy
 
-Cloudflare Pages project `slimchancegg-hub`, connected to `main`. No build
-command, output `/`. Pages checks out submodules, so pushing a new
-submodule pointer redeploys that game.
+Cloudflare Pages project `slimchancegg-hub`, connected to `main`, output `/`.
+Pages checks out submodules, so pushing a new submodule pointer redeploys
+that game.
+
+Build command (keeps repo tooling off the live site):
+
+```bash
+rm -rf scripts test .github
+```
+
+`_headers` sets the CSP and other security headers for the hub, the games
+(`/arcade/games/*`) and Clipstack (`/clipstack/*`). Pages only reads the root
+`_headers`, so the games' and Clipstack's own header rules live here.
+What each header does is on `security.html`.
 
 ## Adding a game
 

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Security | SlimChance</title>
+  <meta name="description" content="How the SlimChance hub, arcade and Clipstack keep you safe: no tracking, no accounts, strict browser security rules.">
+  <link rel="icon" href="assets/brand/avatar.png">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/space.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/security.css">
+</head>
+<body>
+  <div class="bg-space" aria-hidden="true"></div>
+  <div class="bg-tint" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="lockup" href="./"><img src="assets/brand/lockup.png" alt="Slim Chance home" width="1280" height="720"></a>
+  </header>
+
+  <main id="main" class="doc">
+    <div class="doc__panel">
+      <h1>Security</h1>
+      <p class="doc__updated">Last updated November 14, 2026</p>
+
+      <h2>What this site knows about you</h2>
+      <ul>
+        <li>No accounts, cookies, analytics, ads or tracking.</li>
+        <li>Every file the site uses is served from this site. Fonts and thumbnails included, so your browser doesn't call Google or YouTube just to show a page.</li>
+        <li>Your arcade scores are saved in your own browser (<code>localStorage</code>). They never leave your device. Clearing site data wipes them.</li>
+        <li>Clipstack edits your video inside your browser. Your clip is never uploaded.</li>
+        <li>Links to YouTube, Instagram, Facebook and TikTok are plain links. Nothing from those sites is embedded.</li>
+      </ul>
+
+      <h2>Security rules the site sends</h2>
+      <ul>
+        <li><b>Content-Security-Policy</b>: the browser may only run scripts, styles, fonts and images from this site, and may not contact any other server. Clipstack also allows WebAssembly and in-browser workers, which its audio encoder needs.</li>
+        <li><b>frame-ancestors</b> and <b>X-Frame-Options</b>: other sites can't put these pages in a frame to trick you into clicking. Only the arcade may frame its own games.</li>
+        <li><b>Game score checks</b>: the arcade only accepts a score if it comes from this site, from the game frame on screen, and names that game.</li>
+        <li><b>X-Content-Type-Options: nosniff</b>: files are only treated as the type they're served as.</li>
+        <li><b>Referrer-Policy: no-referrer</b>: links you follow don't tell the next site where you came from.</li>
+        <li><b>Permissions-Policy</b>: camera, microphone, location, USB and payments are switched off.</li>
+        <li><b>Strict-Transport-Security</b>: browsers only ever load this site over HTTPS.</li>
+      </ul>
+
+      <h2>How the clips get here</h2>
+      <p>Once a day a GitHub Action asks the YouTube Data API for the newest Shorts on both channels, saves the thumbnails into this site, and redeploys. The API key lives in a GitHub secret and never reaches your browser.</p>
+
+      <h2>Open source</h2>
+      <p>All of it is public on GitHub: the <a href="https://github.com/CjCrump/games-chanceitstudio">hub</a>, <a href="https://github.com/CjCrump/clipstack">Clipstack</a>, and the games <a href="https://github.com/CjCrump/snake">Light Snake</a>, <a href="https://github.com/CjCrump/bullseye-aim-trainer">Bullseye</a> and <a href="https://github.com/CjCrump/turtle-surf">Turtle Surf</a>. Clipstack's own details are on <a href="clipstack/security.html">its security page</a>.</p>
+
+      <h2>Report a problem</h2>
+      <p>Found a security issue? Please <a href="https://github.com/CjCrump/games-chanceitstudio/security/advisories/new">report it privately on GitHub</a> instead of opening a public issue. The contact is also in <a href=".well-known/security.txt">security.txt</a>.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="legal">© 2026 Chance IT Studio LLC · <a href="./">Back to SlimChance</a></p>
+  </footer>
+</body>
+</html>

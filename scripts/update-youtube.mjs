@@ -10,6 +10,7 @@
 
 import { mkdir, readdir, readFile, unlink, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import sharp from 'sharp'; // installed by `npm ci --prefix scripts` (see the workflow)
 
 // id: the channel's UC... ID (YouTube Studio > Settings > Channel > Advanced settings).
 // With the ID set, the script never has to load the channel page, which YouTube
@@ -20,6 +21,10 @@ const CHANNELS = [
 ];
 const KEEP = 12; // newest Shorts kept per channel
 const THUMB_DIR = 'assets/yt';
+// Cards are at most 240px wide, so 480px covers 2x screens. YouTube's 1080x1920
+// originals are ~130 KB each; this brings them to roughly 30 KB.
+const THUMB_W = 480;
+const THUMB_H = 854;
 const OUT_FILE = 'data/youtube.js';
 const FIXTURES = process.env.FIXTURES; // folder of saved responses for offline tests
 const API_KEY = process.env.YOUTUBE_API_KEY || '';
@@ -82,10 +87,19 @@ async function listShorts(channelId) {
 }
 
 // Shorts usually have a vertical "oar2" thumbnail; use it when it exists.
+// Resize to 9:16 (cropping the centre) and re-encode, stripping metadata.
+async function writeThumb(id, img) {
+  const small = await sharp(img)
+    .resize(THUMB_W, THUMB_H, { fit: 'cover', position: 'centre' })
+    .jpeg({ quality: 72, mozjpeg: true })
+    .toBuffer();
+  await writeFile(join(THUMB_DIR, `${id}.jpg`), small);
+}
+
 async function saveShortThumb(id) {
   const img = await get(`https://i.ytimg.com/vi/${id}/oar2.jpg`, 'buffer');
   if (!img || img.length < 2000) return false;
-  await writeFile(join(THUMB_DIR, `${id}.jpg`), img);
+  await writeThumb(id, img);
   return true;
 }
 
@@ -121,7 +135,7 @@ async function main() {
           console.log(`  skipped (no thumbnail): ${v.title}`);
           continue;
         }
-        await writeFile(join(THUMB_DIR, `${v.id}.jpg`), img);
+        await writeThumb(v.id, img);
       }
       keep.add(`${v.id}.jpg`);
       out[ch.key].push({

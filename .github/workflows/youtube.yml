@@ -25,6 +25,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Install image tools
+        run: npm ci --prefix scripts --no-audit --no-fund
+
       - name: Pull latest uploads
         run: node scripts/update-youtube.mjs
         env:

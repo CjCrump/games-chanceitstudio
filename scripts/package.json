@@ -1,0 +1,9 @@
+{
+  "name": "hub-scripts",
+  "private": true,
+  "description": "Tools for the daily YouTube update. Lives in scripts/ so nothing here is served by the site.",
+  "type": "module",
+  "dependencies": {
+    "sharp": "0.35.5"
+  }
+}

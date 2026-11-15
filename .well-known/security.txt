@@ -1,0 +1,6 @@
+# SlimChance hub security contact. Policy and details: /security.html
+Contact: https://github.com/CjCrump/games-chanceitstudio/security/advisories/new
+Expires: 2027-11-14T00:00:00.000Z
+Preferred-Languages: en
+Policy: https://games.chanceitstudio.com/security.html
+Canonical: https://games.chanceitstudio.com/.well-known/security.txt

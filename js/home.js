@@ -2,6 +2,13 @@
 // Everything is built with textContent, never innerHTML, so data can't inject markup.
 
 (() => {
+  // Old arcade links were /#gameId at the root. Send them to the arcade.
+  const oldId = decodeURIComponent(location.hash.slice(1));
+  if (oldId && Hub.games.byId(oldId)) {
+    location.replace(`arcade/#${encodeURIComponent(oldId)}`);
+    return;
+  }
+
   const PLATFORM_LABEL = { youtube: 'YouTube', instagram: 'Instagram', facebook: 'Facebook', tiktok: 'TikTok' };
 
   const el = (tag, cls, text) => {
