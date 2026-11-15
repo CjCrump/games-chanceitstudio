@@ -5,7 +5,8 @@
    hub. We accept a message only if ALL of these hold:
      • data.src === "chanceit-game"
      • data.gameId is a known game in the manifest
-     • event.origin === that game's GitHub Pages origin
+     • event.origin === that game's origin (this site; games are submodules)
+     • event.source is the game frame on screen, not some other window
 
    Anything else is ignored. Cross-origin pages can only postMessage —
    they can never call hub functions directly.
@@ -44,6 +45,9 @@ Hub.bridge = (function () {
     if (!d || d.src !== "chanceit-game" || !d.gameId) return;
     if (!Hub.games.byId(d.gameId)) return;            // unknown game
     if (e.origin !== Hub.games.originOf(d.gameId)) return; // origin must match manifest
+    const frame = document.getElementById("gameFrame");
+    if (!frame || e.source !== frame.contentWindow) return;  // only the game being played
+    if (frame.dataset.gameId !== d.gameId) return;            // and it must be that game
     handle(d);
   }
 

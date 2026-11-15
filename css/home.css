@@ -42,28 +42,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--yellow); outlin
   100% { transform: translate(-50%, -50%) scale(2.6) rotate(18deg); opacity: 0.15; }
 }
 
-/* wormhole background: a square image centred on the hole, spinning around it.
-   150vmax square so its corners never show while it turns, on any screen shape. */
-.bg-space {
-  position: fixed; z-index: -2; left: 50%; top: 50%;
-  width: 150vmax; height: 150vmax; margin: -75vmax 0 0 -75vmax;
-  background: #180e22 url('../assets/wormhole.jpg') center / cover no-repeat;
-  animation: spin 160s linear infinite;
-  will-change: transform;
-}
-@keyframes spin {
-  0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.12); }
-  100% { transform: rotate(360deg) scale(1); }
-}
-/* purple wash on top so text stays readable over the stars */
-.bg-tint {
-  position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(42, 29, 71, 0.15) 0%, rgba(42, 29, 71, 0.55) 70%),
-    linear-gradient(rgba(42, 29, 71, 0.35), rgba(42, 29, 71, 0.35));
-}
-
 /* ---------- TV static ---------- */
 .screen-static {
   position: absolute; inset: 0; pointer-events: none;
@@ -71,15 +49,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--yellow); outlin
   opacity: 0.12; mix-blend-mode: screen;
   animation: static 0.32s steps(4) infinite;
 }
-@keyframes static { to { background-position: 0 -1024px; } }
-
-.static-hover { position: relative; }
-.static-hover::after {
-  content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
-  background: url('../assets/static.png') 0 0 / 256px 1024px; opacity: 0; mix-blend-mode: screen;
-}
-.static-hover:hover::after, .static-hover:focus-within::after { animation: flash 0.35s steps(4) 1, static 0.32s steps(4) 1; }
-@keyframes flash { 0% { opacity: 0.6; } 100% { opacity: 0; } }
 
 /* ---------- header ---------- */
 .site-header {
@@ -220,6 +189,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--yellow); outlin
 .game-link img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-bottom: var(--outline); }
 .game-link h3 { font: 28px/1 var(--pop); letter-spacing: 0.03em; margin: 12px 14px 2px; color: var(--yellow); }
 .game-link p { margin: 0 14px; font-size: 14px; }
+.game-link .game-best { margin-top: 8px; font: 500 13px var(--mono); color: var(--phosphor); }
 
 .everyone { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 30px; align-items: center; padding-bottom: 56px; }
 .everyone p { font-size: 18px; max-width: 62ch; }
@@ -261,7 +231,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--yellow); outlin
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .tunnel span, .bg-space, .screen-static, .static-hover::after, .osd .rec { animation: none; }
+  .tunnel span, .screen-static, .osd .rec { animation: none; }
   .tunnel span { opacity: 0.5; }
   .tunnel span:nth-child(1) { transform: translate(-50%, -50%) scale(0.5); }
   .tunnel span:nth-child(2) { transform: translate(-50%, -50%) scale(0.9); }

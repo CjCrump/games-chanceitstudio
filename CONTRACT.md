@@ -27,7 +27,7 @@ Sent with `postMessage` from inside the play-field iframe:
 A message is processed only if **all** hold:
 
 1. `data.src === "chanceit-game"`
-2. `data.gameId` is a game in `src/manifest.js`
+2. `data.gameId` is a game in `arcade/src/manifest.js`
 3. `event.origin` equals that game's URL origin in the manifest
 
 Everything else is ignored. Cross-origin pages can only `postMessage` —

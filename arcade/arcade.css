@@ -1,0 +1,74 @@
+/* Arcade: directory grid and play room, in the SlimChance jazz palette.
+   Tokens come from ../css/tokens.css; the wormhole from ../css/space.css. */
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--text); font: 16px/1.6 var(--sans); }
+img { max-width: 100%; display: block; }
+a { color: var(--phosphor); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- directory ---------- */
+.hubhead, main, .foot { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.hubhead { padding-top: 18px; padding-bottom: 8px; }
+.hubhead__home img { width: 170px; height: auto; }
+.hubhead__title {
+  margin: 18px 0 0; font: 64px/1 var(--pop); letter-spacing: 0.03em; color: var(--yellow);
+  -webkit-text-stroke: 2px var(--ink); paint-order: stroke fill; text-shadow: 4px 4px 0 var(--pink), 8px 8px 0 var(--ink);
+}
+.hubhead__hint { margin: 10px 0 24px; color: var(--dim); font-family: var(--mono); }
+
+.grid { list-style: none; margin: 0; padding: 0 0 40px; display: grid; gap: 26px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.card {
+  display: flex; flex-direction: column; height: 100%; text-decoration: none; color: var(--text);
+  background: var(--bg-2); border: var(--outline); border-radius: var(--radius); overflow: hidden;
+  box-shadow: 7px 7px 0 var(--teal); transition: transform 0.12s, box-shadow 0.12s;
+}
+.grid li:nth-child(3n + 2) .card { box-shadow: 7px 7px 0 var(--pink); }
+.grid li:nth-child(3n + 3) .card { box-shadow: 7px 7px 0 var(--yellow); }
+.card:hover, .card:focus-visible { transform: translate(-3px, -3px); }
+.card__thumb img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-bottom: var(--outline); }
+.card__body { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px 16px; flex: 1; }
+.card__title { font: 30px/1 var(--pop); letter-spacing: 0.03em; color: var(--yellow); }
+.card__blurb { color: var(--dim); font-size: 14px; }
+.card__tags { display: flex; gap: 6px; }
+.tag { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 8px; border-radius: 999px; background: var(--purple); color: var(--cream); }
+.card__best { margin-top: auto; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; padding-top: 10px; border-top: 2px dashed var(--line); font-family: var(--mono); }
+.card__best-k { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); }
+.card__best-v { color: var(--phosphor); font-weight: 500; }
+.card__plays { margin-left: auto; font-size: 12px; color: var(--dim); }
+
+.foot { display: flex; justify-content: space-between; padding-bottom: 28px; font: 13px var(--mono); color: var(--dim); }
+
+/* ---------- play room ---------- */
+.playroom { height: 100vh; height: 100dvh; display: grid; grid-template-rows: auto 1fr; }
+.playbar { display: flex; align-items: center; gap: 14px; padding: 10px 16px; background: var(--screen); border-bottom: var(--outline); }
+.playbar__title { display: flex; flex-direction: column; line-height: 1.1; }
+.playbar__title h1 { margin: 0; font: 28px/1 var(--pop); letter-spacing: 0.03em; color: var(--yellow); }
+.playbar__best { font: 13px var(--mono); color: var(--phosphor); }
+.playbar__actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.field-wrap { position: relative; display: grid; place-items: center; overflow: hidden; }
+.field-wrap:fullscreen { background: var(--screen); }
+.field { position: relative; }
+.field--fill { width: 100%; height: 100%; }
+.field--ratio { width: 100%; height: 100%; max-width: 100%; max-height: 100%; margin: auto; }
+.field iframe { width: 100%; height: 100%; border: 0; display: block; background: var(--screen); }
+
+/* ---------- buttons ---------- */
+.btn { font: 700 14px var(--sans); padding: 9px 16px; border-radius: 10px; cursor: pointer; border: var(--outline); }
+.btn--primary { background: var(--yellow); color: var(--ink); box-shadow: 3px 3px 0 var(--pink); }
+.btn--ghost { background: transparent; color: var(--phosphor); border-color: var(--phosphor); }
+.iconbtn { width: 38px; height: 38px; display: grid; place-items: center; border: var(--outline); border-radius: 10px; background: var(--cream); color: var(--ink); font-size: 20px; line-height: 1; cursor: pointer; }
+.iconbtn:hover { background: var(--yellow); }
+
+@media (max-width: 560px) {
+  .hubhead__title { font-size: 48px; }
+  .grid { grid-template-columns: 1fr; }
+  .playbar { gap: 8px; padding: 8px 10px; }
+  .playbar__title h1 { font-size: 22px; }
+  .btn { padding: 7px 10px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+  .card:hover, .card:focus-visible { transform: none; }
+}

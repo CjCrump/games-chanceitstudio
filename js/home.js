@@ -91,10 +91,12 @@
       const li = el('li', 'game-card static-hover');
       const a = link(`arcade/#${encodeURIComponent(g.id)}`, 'game-link');
       const img = el('img');
-      img.src = g.thumb;
+      img.src = Hub.asset(g.thumb);
       img.alt = '';
       img.loading = 'lazy';
-      a.append(img, el('h3', '', g.title), el('p', 'dim', g.blurb));
+      const best = Hub.formatBest(Hub.store.bestFor(g.id));
+      const bestLine = el('p', 'game-best', best ? `Your best: ${best}` : 'Not played yet');
+      a.append(img, el('h3', '', g.title), el('p', 'dim', g.blurb), bestLine);
       li.append(a);
       grid.append(li);
     }
@@ -102,5 +104,6 @@
 
   renderClips();
   renderFollow();
+  Hub.store.init();
   renderGames();
 })();

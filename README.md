@@ -1,72 +1,73 @@
 # games-chanceitstudio
 
-The hub for `games.chanceitstudio.com` — a directory that plays games
-hosted on GitHub Pages inside an embedded field (fullscreen optional),
-with a local-only player profile (cross-game high scores + achievements).
+The SlimchanceGG hub at `games.chanceitstudio.com`: latest Shorts,
+socials, Clipstack, and an arcade that keeps your best scores.
 
 Vanilla HTML / CSS / JS. No framework, no build step.
 
-## How it works
+## Clone
 
-- Each game is its own repo, deployed to GitHub Pages, listed in
-  `src/manifest.js`.
-- The hub embeds the selected game in an `<iframe>` and owns fullscreen.
-- Games report results up via `postMessage` (see `CONTRACT.md`); the hub
-  stores the unified profile in its own `localStorage` and owns the
-  achievement rules.
+The arcade games and Clipstack are git submodules, each its own repo.
+Clone with them:
+
+```bash
+git clone --recurse-submodules https://github.com/CjCrump/games-chanceitstudio.git
+```
+
+Already cloned without them:
+
+```bash
+git submodule update --init --recursive
+```
+
+Pull the latest of every game and Clipstack, then commit the new pointers:
+
+```bash
+git submodule update --remote
+```
 
 ## Repo map
 
 ```
-index.html            page shell + script order
-styles.css            shared "Range Day" tokens + hub UI
-app.js                boot + hash routing
-src/
-  manifest.js         window.GAMES — add a game = one entry
-  store.js            player profile (local-only; swap-ready for a backend)
-  bridge.js           game→hub message listener + origin validation
-  achievements.js     rule registry + evaluate() (empty until Phase 2)
-  views/
-    directory.js      game grid (placeholder for the wheel, Phase 3)
-    play.js           field-first play room + fullscreen + game switcher
-assets/               favicon + game thumbnails
-CONTRACT.md           the game↔hub message spec + drop-in snippet
+index.html              home: TV hero, clips, follow, Clipstack, arcade, footer
+css/                    tokens (palette + fonts), space (wormhole bg), home
+js/home.js              renders clips, follow cards, game cards
+data/                   socials, clip links, youtube.js (generated daily)
+scripts/                update-youtube.mjs, run by .github/workflows/youtube.yml
+arcade/
+  index.html            directory + play room (data-root="../")
+  arcade.css
+  app.js                boot + hash routing (#gameId)
+  src/
+    manifest.js         window.GAMES: add a game = one entry
+    store.js            local-only profile, best scores, formatBest
+    bridge.js           game -> hub postMessage, origin + frame checks
+    achievements.js     rule registry
+    views/              directory.js, play.js
+  games/                submodules: snake, bullseye-aim-trainer, turtle-surf
+clipstack/              submodule: CjCrump/clipstack
+assets/                 brand art, wormhole, static sprite, thumbs, yt/
+CONTRACT.md             the game <-> hub message spec
 ```
 
 ## Run locally
 
-It's static and uses plain `<script>` tags (not ES modules), so you can
-just open it:
-
 ```bash
-open index.html        # or double-click
+python3 -m http.server 8000
 ```
 
-`localStorage` on `file://` can be flaky across browsers; persistence is
-reliable once deployed to a real origin.
+Then open http://localhost:8000. Games need a real origin for the score
+bridge, so `file://` is not enough for the arcade.
 
-## Deploy (Cloudflare Pages)
+## Deploy
 
-You're already on Cloudflare, so host the hub here:
-
-1. Create a Pages project from this repo. No build command, no output dir —
-   it's static.
-2. In the Pages project's custom domains, add `games.chanceitstudio.com`
-   (Cloudflare wires the DNS).
+Cloudflare Pages project `slimchancegg-hub`, connected to `main`. No build
+command, output `/`. Pages checks out submodules, so pushing a new
+submodule pointer redeploys that game.
 
 ## Adding a game
 
-1. Deploy the game to GitHub Pages.
-2. Append one entry to `src/manifest.js` (`id`, `title`, `blurb`, `url`,
-   `thumb`, `tags`, `fit`).
-3. Drop a thumbnail in `assets/thumbs/`.
-4. To feed scores/achievements, add the `hub-bridge.js` snippet from
-   `CONTRACT.md` to that game.
-
-## Status
-
-- **Phase 1 (this):** manifest, store, bridge, routing, directory grid,
-  play room, fullscreen. Bullseye listed.
-- **Phase 2:** Bullseye emits results; achievement rules + unlock toasts.
-- **Phase 3:** the wheel directory swaps in over the grid.
-- **Later:** optional backend (cross-device), filters, more games.
+1. Make the game its own repo with `hub-bridge.js` from `CONTRACT.md`.
+2. `git submodule add https://github.com/CjCrump/<repo>.git arcade/games/<repo>`
+3. Add one entry to `arcade/src/manifest.js` (`url: "games/<repo>/"`).
+4. Drop a thumbnail in `assets/thumbs/`.

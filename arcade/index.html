@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" data-root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arcade | SlimChance</title>
+  <meta name="description" content="Free browser games from SlimChance: Bullseye, Light Snake and Turtle Surf. Beat my high score.">
+  <link rel="icon" href="../assets/brand/avatar.png">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/space.css">
+  <link rel="stylesheet" href="arcade.css">
+</head>
+<body data-view="directory">
+  <div class="bg-space" aria-hidden="true"></div>
+  <div class="bg-tint" aria-hidden="true"></div>
+  <div id="app"></div>
+
+  <!-- Plain scripts (not modules). Order matters: data and libs first, app.js last. -->
+  <script src="src/manifest.js" defer></script>
+  <script src="src/achievements.js" defer></script>
+  <script src="src/store.js" defer></script>
+  <script src="src/bridge.js" defer></script>
+  <script src="src/views/directory.js" defer></script>
+  <script src="src/views/play.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

@@ -116,3 +116,12 @@ Hub.store = (function () {
     reset() { profile = fresh(); save(); },
   };
 })();
+
+// "142 pts · 93% · 238ms", or null if never played
+Hub.formatBest = function (best) {
+  if (!best) return null;
+  const parts = [`${best.points} pts`];
+  if (best.accuracy != null) parts.push(`${(best.accuracy * 100).toFixed(0)}%`);
+  if (best.reactBest != null) parts.push(`${best.reactBest}ms`);
+  return parts.join(" · ");
+};

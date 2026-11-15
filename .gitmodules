@@ -1,0 +1,12 @@
+[submodule "arcade/games/snake"]
+	path = arcade/games/snake
+	url = https://github.com/CjCrump/snake
+[submodule "arcade/games/bullseye-aim-trainer"]
+	path = arcade/games/bullseye-aim-trainer
+	url = https://github.com/CjCrump/bullseye-aim-trainer
+[submodule "arcade/games/turtle-surf"]
+	path = arcade/games/turtle-surf
+	url = https://github.com/CjCrump/turtle-surf
+[submodule "clipstack"]
+	path = clipstack
+	url = https://github.com/CjCrump/clipstack

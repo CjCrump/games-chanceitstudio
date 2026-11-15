@@ -32,7 +32,10 @@ Hub.views.play = {
       <div class="playroom">
         <header class="playbar">
           <button class="btn btn--ghost" id="backBtn" aria-label="Back to all games">← All games</button>
-          <div class="playbar__title">${game.title}</div>
+          <div class="playbar__title">
+            <h1>${game.title}</h1>
+            <span class="playbar__best" id="bestLine"></span>
+          </div>
           <div class="playbar__actions">
             ${multi ? `
               <button class="iconbtn" id="prevBtn" title="Previous game (${prev.title})" aria-label="Previous game">‹</button>
@@ -46,7 +49,8 @@ Hub.views.play = {
           <div class="field ${fitClass}" ${ratioStyle}>
             <iframe
               id="gameFrame"
-              src="${game.url}"
+              src="${Hub.games.urlOf(gameId)}"
+              data-game-id="${game.id}"
               title="${game.title}"
               allow="fullscreen; autoplay; gamepad"
               loading="eager"
@@ -54,6 +58,15 @@ Hub.views.play = {
           </div>
         </div>
       </div>`;
+
+    // live "Your best" line; the store notifies us when the game reports a score
+    const bestLine = root.querySelector("#bestLine");
+    const showBest = () => {
+      bestLine.textContent = `Your best: ${Hub.formatBest(Hub.store.bestFor(gameId)) || "none yet"}`;
+    };
+    showBest();
+    if (Hub.views.play._unsub) Hub.views.play._unsub();
+    Hub.views.play._unsub = Hub.store.subscribe(showBest);
 
     root.querySelector("#backBtn").addEventListener("click", () => { location.hash = ""; });
     if (multi) {
