@@ -22,3 +22,13 @@
   ! X-Frame-Options
   Content-Security-Policy: default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self' blob:; img-src 'self'; media-src 'self' blob:; style-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
   X-Frame-Options: DENY
+
+# Standalone game pages only make sense inside the arcade frame
+/arcade/games/*
+  X-Robots-Tag: noindex
+
+# Keep the pages.dev copies (and preview builds) out of search; games.chanceitstudio.com is the real one
+https://slimchancegg-hub.pages.dev/*
+  X-Robots-Tag: noindex
+https://:preview.slimchancegg-hub.pages.dev/*
+  X-Robots-Tag: noindex

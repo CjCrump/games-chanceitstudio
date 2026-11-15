@@ -1,0 +1,6 @@
+# Everything is welcome. The standalone game pages are marked noindex in _headers instead
+# of blocked here, so search engines can still read that instruction.
+User-agent: *
+Allow: /
+
+Sitemap: https://games.chanceitstudio.com/sitemap.xml
