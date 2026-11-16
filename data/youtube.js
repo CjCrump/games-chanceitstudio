@@ -2,6 +2,14 @@
 window.YOUTUBE = {
   "gamer": [
     {
+      "id": "-njYGBBZr90",
+      "title": "Halo Infinite: Slayer - Bloopers 🤡",
+      "date": "2026-11-15",
+      "url": "https://youtube.com/shorts/-njYGBBZr90",
+      "thumb": "assets/yt/-njYGBBZr90.jpg",
+      "vertical": true
+    },
+    {
       "id": "E2Diwmgt7aU",
       "title": "Halo Infinite: Slayer - Grape City",
       "date": "2026-11-15",
