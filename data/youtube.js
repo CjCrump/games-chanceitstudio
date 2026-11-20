@@ -2,6 +2,14 @@
 window.YOUTUBE = {
   "gamer": [
     {
+      "id": "tuRAQ5tsrdo",
+      "title": "Elden Ring: Erdtree Avatar - Opaline Bubble Tear - Crimson Burst Crystal Tear",
+      "date": "2026-11-20",
+      "url": "https://youtube.com/shorts/tuRAQ5tsrdo",
+      "thumb": "assets/yt/tuRAQ5tsrdo.jpg",
+      "vertical": true
+    },
+    {
       "id": "-njYGBBZr90",
       "title": "Halo Infinite: Slayer - Bloopers 🤡",
       "date": "2026-11-15",
